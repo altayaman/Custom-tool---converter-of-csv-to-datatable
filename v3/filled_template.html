@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+
+<!--  HEAD  ============================================================================================================================ -->
+    <head>
+	    <style>
+		    th {
+		    /*border: 0px solid #dddddd;*/
+		    text-align: left;
+		    padding: 0px;
+			}
+
+            /* ensures space between search fields */
+            /*
+            form div + div {
+              margin-top: 1em;
+            }
+            */
+
+            #inputs label {
+              /* To make sure that all labels have the same size and are properly aligned */
+              display: inline-block;
+              width: 100px;
+              text-align: right;
+            }
+
+            input[type=text] {
+              /* To make sure that all text fields have the same font settings
+                 By default, textareas have a monospace font */
+              font: 1em sans-serif;
+
+              /* To give the same size to all text fields */
+              width: 90%;
+              box-sizing: border-box;
+
+              /* To harmonize the look & feel of text field border */
+              border: 1px solid #999;
+
+              font-size: 13px;
+              padding: 6px 20px 12px 40px;
+              border: 1px solid #ddd;
+              margin-bottom: 1px;
+
+            }
+
+            table td:nth-child(2) {
+                width: 10%;   
+                word-wrap: break-word;
+                /*
+                table-layout: fixed;
+                */
+            }
+
+            table a {
+              
+                margin-top: -1px; /* Prevent double borders */
+                text-decoration: none;
+                font-size: 13px;  /* changed */
+                color: black;
+                font-family: Tahoma, Geneva, sans-serif;  
+                width: 1500px;
+                color: grey;
+                /*Options:*/
+                /*Arial, Helvetica, sans-serif*/
+                /*monospace*/
+                /*Tahoma, Geneva, sans-serif*/
+                /*"Courier New", Courier, monospace*/
+            }
+
+            div.dataTables_filter { display: none !important; }
+
+	    </style>
+
+        <title>My Page</title>
+        
+    </head>
+
+<!--  BODY  ============================================================================================================================ -->
+	<body>
+
+        <form>
+            <fieldset id="inputs">
+                <legend>Search elements:</legend>
+                <div>
+                    <label for="AND inc">AND inc:</label>  <input type="text" id="myInput_and_inc" onkeyup="custom_dTable_search_inc_AND()" placeholder="Search for presence of all words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="AND exc">AND exc:</label>  <input type="text" id="myInput_and_exc" onkeyup="custom_dTable_search_exc_AND()" placeholder="Search for presence of all words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="OR inc"> OR inc: </label>  <input type="text" id="myInput_or_inc"  onkeyup="custom_dTable_search_inc_OR()"  placeholder="Search for presence of any words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="OR exc"> OR exc: </label>  <input type="text" id="myInput_or_exc"  onkeyup="custom_dTable_search_exc_OR()"  placeholder="Search for presence of any words .." title="Type in a name">
+                </div>
+
+            </fieldset>
+        </form>
+        <br><br>
+
+        <div>
+            Toggle column: 
+            <form>
+
+                
+						<input class="toggle-vis" id="toggle0" data-column="0" type="button" value="description_mod1" style="background-color:#F2F4F4">
+					<input class="toggle-vis" id="toggle1" data-column="1" type="button" value="description_mod1_norm" style="background-color:#F2F4F4">
+					<input class="toggle-vis" id="toggle2" data-column="2" type="button" value="TF Type" style="background-color:#F2F4F4">
+					<input class="toggle-vis" id="toggle3" data-column="3" type="button" value="TF Type hid" style="background-color:#F2F4F4">
+
+
+            </form>
+        </div>
+        <br><br>
+
+
+		<table id="table_1_id" class="display" width="100%">
+
+            <thead>
+                <tr>
+                    
+						<th>description_mod1</th>
+					<th>description_mod1_norm</th>
+
+                    
+                    <th width="15%" class="exp"> TF Type </th>
+                    <th width="15%">TF Type hid</th>
+                </tr>
+            </thead>
+
+			<tbody> 
+			</tbody>
+
+		</table>
+
+	</body>
+
+<!--  SCRIPTS  ============================================================================================================================ -->	
+    <!-- js libs downloaded (in case web sources change) -->
+    <link href="csv_to_html src/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="csv_to_html src/javascript/main/jquery.dataTables.js"></script>
+    <script src="csv_to_html src/javascript/main/jquery-1.12.4.js"></script>
+    <script src="csv_to_html src/javascript/main/jquery.dataTables.min.js"></script>
+
+    <link href="csv_to_html src/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="csv_to_html src/javascript/aux/buttons.flash.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/buttons.html5.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/buttons.print.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/dataTables.buttons.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/jszip.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/pdfmake.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/vfs_fonts.js"></script>
+
+    <link href="csv_to_html src/css/keyTable.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="csv_to_html src/javascript/aux/dataTables.keyTable.min.js"></script>
+    
+
+    <!-- js libs from web -->
+    <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    <link href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js"></script>
+
+    <link href="https://cdn.datatables.net/keytable/2.3.1/css/keyTable.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.datatables.net/keytable/2.3.1/js/dataTables.keyTable.min.js"></script>
+    
+
+
+	<meta charset=utf-8 />
+    <script type="text/javascript">
+
+
+
+// Function: Google search  ================================================================================================================
+	// $(function() {
+	//   $("a").on("click",function() {
+	//     query = 'hello world';
+	//     url ='http://www.google.com/search?q=' + this.textContent;
+	//     window.open(url,'_blank');
+	//     this.innerHTML='<a href="#"><div id="highlight">' + this.textContent + '</div></a> ';
+	//     //(this).addId("highlight")
+	//   });
+	// });
+
+    function googleSearch(e) {
+        text_ = e.textContent;
+        text_ = text_.replace('&','%26')  // & is a scpecial character in urls
+        url ='http://www.google.com/search?q=' + text_;
+        window.open(url,'_blank');
+    }
+
+// Function: other  ========================================================================================================================
+
+    // set TP type value to last col
+    function find( element ) {
+        var x = '_' + element.getAttribute("name");
+        var dd = document.getElementById(x);
+        //dd.textContent = element.value;
+
+        //alert(x);
+        //$('#table_1_id').dataTable().fnUpdate('Zebra' , $('[data-id=' + x + ']'), 2 );
+        //alert($('#table_1_id').dataTable().fnGetPosition(element.closest("tr").cellIndex));
+
+
+        row_element  = element.closest("tr");  // index of row
+        col_element  = element.closest("td");  // 
+        col_index = col_element.cellIndex+1;
+        col_index = 3;
+        //alert(row_position + ', ' + (col_position.cellIndex+1));
+        //$('#table_1_id').dataTable().fnUpdate(element.value, row_element, col_index);   // was before toogle buttons feature added
+        $('#table_1_id').dataTable().fnUpdate(element.value, row_element, col_index);
+
+        // NEEDS RECHECKING
+        // row_position = dd.closest("tr");
+        // col_position = dd.closest("td").cellIndex;
+        // alert(row_position + ', ' + col_position);
+        // $('#table_1_id').dataTable().fnUpdate(element.value, row_position, col_position);
+
+    }
+
+    // Performs warning alert when closing current page tab
+    window.onbeforeunload = function() {
+        return "You're leaving the site.";
+    };
+    $(document).ready(function() {
+        $('a[rel!=ext]').click(function() { window.onbeforeunload = null; });
+        $('form').submit(function() { window.onbeforeunload = null; });
+    });
+
+
+// Filter search functions for table  =======================================================================================================
+
+    // Function performs AND search on item descriptions
+    $("#search").keyup(function(){
+        _this = this;
+        
+        // Show only matching TR, hide rest of them
+        $.each($("#table_1_id tbody tr a"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                $(this).hide();
+                //$(this.style.display = "none"
+            else
+                $(this).show();                
+        });
+    }); 
+
+
+    function custom_dTable_search_inc_OR(e){
+        var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+        var counter = 0;
+        var highlighted_output = '';
+        input1 = document.getElementById("myInput_or_inc");
+        input2 = input1.value.toUpperCase();
+        input3 = input2.trim();
+        if(input3.length != 0){
+            search_tokens_ls = input3.split(/\s+/);
+        }
+        
+        var dataTable = $('#table_1_id').dataTable();
+        dataTable.fnFilter(search_tokens_ls.join('|'), 0, true, false);                      // 0 refers to search only in first column
+        //dataTable.fnFilter(search_tokens_ls.join('|'), null, true, false, true, true);     // detailed version for search in all columns
+    } 
+
+    function custom_dTable_search_exc_OR(e){
+        //$.fn.dataTableExt.afnFiltering.push(
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var firstCol = data[0];
+                var counter = 0;
+
+                var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+                var counter = 0;
+                var highlighted_output = '';
+                input1 = document.getElementById("myInput_or_exc");
+                input2 = input1.value.toUpperCase();
+                input3 = input2.trim();
+
+                // if search field has no search tokens, refresh table by showing all rows
+                if(input3.length == 0){
+                    $.fn.dataTableExt.afnFiltering.length = 0;
+                    $('#table_1_id').dataTable().fnDraw();
+                    return;
+                }
+                else {
+                    search_tokens_ls = input3.split(/\s+/);
+                }
+
+                // count token matches. counter equals to tokens count, then all tokens are found in row
+                var counter = 0;
+                for(var i = 0; i < search_tokens_ls.length; i++) {
+                    if(firstCol.toUpperCase().indexOf(search_tokens_ls[i]) > -1) {
+                        return false;
+                        //counter = counter + 1;
+                        //break;
+                    }
+                }
+                return true;
+
+            }
+        );
+
+        var dataTable = $('#table_1_id').dataTable();
+        //dataTable.draw();
+        dataTable.fnDraw();
+        $.fn.dataTable.ext.search.pop();
+
+    }
+
+    function custom_dTable_search_inc_AND(e){
+        var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+        var counter = 0;
+        var highlighted_output = '';
+        input1 = document.getElementById("myInput_and_inc");
+        input2 = input1.value.toUpperCase();
+        input3 = input2.trim();
+        if(input3.length != 0){
+            search_tokens_ls = input3.split(/\s+/);
+        }
+        
+        var dataTable = $('#table_1_id').dataTable();
+        dataTable.fnFilter(input3);        
+    }
+
+    function custom_dTable_search_exc_AND(e){
+        //$.fn.dataTableExt.afnFiltering.push(
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var firstCol = data[0];
+                var counter = 0;
+
+                var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+                var counter = 0;
+                var highlighted_output = '';
+                input1 = document.getElementById("myInput_and_exc");
+                input2 = input1.value.toUpperCase();
+                input3 = input2.trim();
+
+                // if search field has no search tokens, refresh table by showing all rows
+                if(input3.length == 0){
+                    $.fn.dataTableExt.afnFiltering.length = 0;
+                    $('#table_1_id').dataTable().fnDraw();
+                    return;
+                }
+                else {
+                    search_tokens_ls = input3.split(/\s+/);
+                }
+
+                // count token matches. counter equals to tokens count, then all tokens are found in row
+                var counter = 0;
+                for(var i = 0; i < search_tokens_ls.length; i++) {
+                    if(firstCol.toUpperCase().indexOf(search_tokens_ls[i]) > -1) {
+                        counter = counter + 1;
+                        //break;
+                    }
+                }
+                return (counter==search_tokens_ls.length) ? false : true;  // exclude AND
+                //return (counter==search_tokens_ls.length) ? true : false;    // include AND
+
+            }
+        );
+
+        var dataTable = $('#table_1_id').dataTable();
+        //dataTable.draw();
+        dataTable.fnDraw();
+        $.fn.dataTable.ext.search.pop();
+
+    }
+
+
+
+// DATA TABLE  ============================================================================================================================
+// datatable setting for data above
+    $(document).ready(function() {
+        var table = $('#table_1_id').DataTable( {
+            data: dataSet,
+            'paging': true,        // makes data paginated
+            'sort': true,          // makes column sortable on header click
+            'order': [],          // enable/disable intial sorting
+            'searching': true,    // enable/disable search box
+            keys: true,
+
+
+            // sets separate properties for individual columns
+            // in "targets" indicated index of columns
+            "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": true,
+                "searchable": true
+            },
+            {
+                "targets": [ 2 ],
+                "visible": true,
+                "searchable": false
+            },
+            {
+                "targets": [ 3 ],
+                "visible": true,
+                "searchable": false
+            }
+            ],
+            dom: 'Bflrtip',
+            buttons: [
+                //'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                    text: 'Export to CSV',        // sets button name
+                    extend: 'csv',                // adds button that exports datatable into csv
+                    exportOptions: {
+                        columns: [':not(.exp)']   // selects all column but with class name .exp for render
+                        // ,format: {
+                        //     body: function(data, col, row) {
+                        //         var table = $('#table_1_id').DataTable();
+                        //         if (col == 'NewCol2 hid') {
+                        //             return table
+                        //                     .cell( {row: row, column: col} )
+                        //                     .nodes()
+                        //                     .to$()
+                        //                     .find(':selected')
+                        //                     .text()
+                        //         } else {
+                        //             return data;
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+            ]
+        } );
+    
+
+        // function for PLACE_HOLDER_4  (e.g. toogle buttons)
+        $('.toggle-vis').on( 'click', function (e) {
+            e.preventDefault();
+
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+
+            // Toggle the visibility
+            var idd = $(this).attr('id');
+            if(! column.visible()){
+                column.visible( true );
+                document.getElementById(idd).style.backgroundColor = "#F2F4F4";
+            }
+            else{
+                column.visible( false );
+                document.getElementById(idd).style.backgroundColor = "#FF9966";
+            }
+
+            //column.visible( ! column.visible() );   // shorter version of above if-else   
+        } );
+
+
+        // Triggers function when focused on any cell data. Certain js libs imported
+        table.on( 'key-focus', function ( e, datatable, cell ) {
+            space_key_msg = cell.data();
+            
+        } );
+
+    
+        function get_content_from_DOM(dom_object){
+            text_ = dom_object.textContent;
+            return text_;
+        }
+
+
+        function websearch_in_new_window(search_text) {
+            if(search_text.startsWith('http:') || search_text.startsWith('https:') || search_text.startsWith('www.')){
+                window.open(search_text, 'new_window_name', 'width=600,height=600');
+                self.focus();
+            } else {
+                google_search_url = search_text.replace('&','%26')  // & is a scpecial character in urls
+                google_search_url ='http://www.google.com/search?q=' + google_search_url;
+                window.open(google_search_url, 'new_window_name', 'width=600,height=600');
+                self.focus();
+            }
+            
+        }
+
+        // Triggers function when any key is pressed
+        var space_key_msg = 'space key msg';
+        document.onkeydown=function(event){
+            var key = event.keyCode;
+            if(key == 32) {   // space key code: 32
+                //alert(space_key_msg);
+
+                var temp_dom_wrapper = document.createElement('div');  // create temp element to turn space_key_msg into html
+                temp_dom_wrapper.innerHTML = space_key_msg;
+                //alert(wrapper.firstChild);                 // another way to extract data
+                //alert(wrapper.textContent);
+
+                search_text = get_content_from_DOM(temp_dom_wrapper);
+
+                test_url = 'https://www.amazon.com/gp/slredirect/picassoRedirect.html/ref=pa_sp_atf_garden_sr_pg1_2?ie=UTF8&adId=A02099002OVID9EDNCVHM&url=https%3A%2F%2Fwww.amazon.com%2FDouble-Sheepskin-Faux-Backing-Shag%2Fdp%2FB01DW8W06S%2Fref%3Dsr_1_2%2F131-8400829-6245152%3Fs%3Dfurniture%26ie%3DUTF8%26qid%3D1504168646%26sr%3D1-2-spons%26keywords%3Darea%2Brugs%26psc%3D1&qualifier=1504168646&id=6999198449226333&widgetName=sp_atf';
+
+                test_img_url = 'https://images-na.ssl-images-amazon.com/images/I/A1yOXiqw9jL._SL1500_.jpg';
+
+                websearch_in_new_window(search_text);
+            }
+
+        }
+
+    } );
+
+// TESTS:
+//$('#table_1_id tr:eq(0) th:eq(0)').text("Text update by code");
+// $(document).ready(function(){
+
+//     $("#table_1_id").on('click', '.btnSelectt', function() {
+//          $('#table_1_id').dataTable().fnUpdate('Zebra' , $(this).closest("tr"), 0 );
+//     });
+// });
+
+
+// DATA  ==================================================================================================================================
+    var dataSet = [
+
+                
+
+
+
+
+['<a href="#" onclick="googleSearch(this);" > 8-piece hot wings </a>','<a href="#" onclick="googleSearch(this);" > 8piecehotwings </a>','<div><div class="rb"><input type="radio" name="radio_1" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_1" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_1"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > sharpie permanent markers, fine point, black, 30001 (72 markers) </a>','<a href="#" onclick="googleSearch(this);" > sharpiepermanentmarkersfinepointblack3000172markers </a>','<div><div class="rb"><input type="radio" name="radio_2" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_2" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_2"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > soylent meal replacement drink, original, 14 fl oz (pack of 12) </a>','<a href="#" onclick="googleSearch(this);" > soylentmealreplacementdrinkoriginal14flozpackof12 </a>','<div><div class="rb"><input type="radio" name="radio_3" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_3" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_3"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > large original pan pizza, toasted parmesan crust flavor </a>','<a href="#" onclick="googleSearch(this);" > largeoriginalpanpizzatoastedparmesancrustflavor </a>','<div><div class="rb"><input type="radio" name="radio_4" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_4" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_4"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > dr. brandt pores no more pore refiner </a>','<a href="#" onclick="googleSearch(this);" > drbrandtporesnomoreporerefiner </a>','<div><div class="rb"><input type="radio" name="radio_5" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_5" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_5"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > prescription from walgreens quantity: 30 </a>','<a href="#" onclick="googleSearch(this);" > prescriptionfromwalgreensquantity30 </a>','<div><div class="rb"><input type="radio" name="radio_6" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_6" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_6"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > graphic bodysuit for baby pink flower 0-3 m </a>','<a href="#" onclick="googleSearch(this);" > graphicbodysuitforbabypinkflower03m </a>','<div><div class="rb"><input type="radio" name="radio_7" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_7" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_7"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > great value salted sweet cream butter, 16 oz </a>','<a href="#" onclick="googleSearch(this);" > greatvaluesaltedsweetcreambutter16oz </a>','<div><div class="rb"><input type="radio" name="radio_8" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_8" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_8"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > classic mac </a>','<a href="#" onclick="googleSearch(this);" > classicmac </a>','<div><div class="rb"><input type="radio" name="radio_9" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_9" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_9"> TruePos </div>'],
+
+	                ];
+
+	    </script>
+	</html>
+	

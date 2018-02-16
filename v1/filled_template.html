@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<!--  HEAD  ============================================================================================================================ -->
+    <head>
+	    <style>
+		    th {
+		    /*border: 0px solid #dddddd;*/
+		    text-align: left;
+		    padding: 0px;
+			}
+
+            /* ensures space between search fields */
+            /*
+            form div + div {
+              margin-top: 1em;
+            }
+            */
+
+            #inputs label {
+              /* To make sure that all labels have the same size and are properly aligned */
+              display: inline-block;
+              width: 100px;
+              text-align: right;
+            }
+
+            input[type=text] {
+              /* To make sure that all text fields have the same font settings
+                 By default, textareas have a monospace font */
+              font: 1em sans-serif;
+
+              /* To give the same size to all text fields */
+              width: 90%;
+              box-sizing: border-box;
+
+              /* To harmonize the look & feel of text field border */
+              border: 1px solid #999;
+
+              font-size: 13px;
+              padding: 6px 20px 12px 40px;
+              border: 1px solid #ddd;
+              margin-bottom: 1px;
+
+            }
+
+            table td:nth-child(2) {
+                width: 10%;   
+                word-wrap: break-word;
+                /*
+                table-layout: fixed;
+                */
+            }
+
+            table a {
+              
+                margin-top: -1px; /* Prevent double borders */
+                text-decoration: none;
+                font-size: 13px;  /* changed */
+                color: black;
+                font-family: Tahoma, Geneva, sans-serif;  
+                width: 1500px;
+                color: grey;
+                /*Options:*/
+                /*Arial, Helvetica, sans-serif*/
+                /*monospace*/
+                /*Tahoma, Geneva, sans-serif*/
+                /*"Courier New", Courier, monospace*/
+            }
+
+            div.dataTables_filter { display: none !important; }
+
+	    </style>
+
+        <title>My Page</title>
+        
+    </head>
+
+<!--  BODY  ============================================================================================================================ -->
+	<body>
+
+        <form>
+            <fieldset id="inputs">
+                <legend>Search elements:</legend>
+                <div>
+                    <label for="AND inc">AND inc:</label>  <input type="text" id="myInput_and_inc" onkeyup="custom_dTable_search_inc_AND()" placeholder="Search for presence of all words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="AND exc">AND exc:</label>  <input type="text" id="myInput_and_exc" onkeyup="custom_dTable_search_exc_AND()" placeholder="Search for presence of all words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="OR inc"> OR inc: </label>  <input type="text" id="myInput_or_inc"  onkeyup="custom_dTable_search_inc_OR()"  placeholder="Search for presence of any words .." title="Type in a name">
+                </div>
+                <div>
+                    <label for="OR exc"> OR exc: </label>  <input type="text" id="myInput_or_exc"  onkeyup="custom_dTable_search_exc_OR()"  placeholder="Search for presence of any words .." title="Type in a name">
+                </div>
+
+            </fieldset>
+        </form>
+        <br><br>
+
+		<table id="table_1_id" class="display" width="100%">
+
+            <thead>
+                <tr>
+                    
+						<th>description_mod1</th>
+
+                    
+                    <th width="15%" class="exp"> TF Type </th>
+                    <th width="15%">TF Type hid</th>
+                </tr>
+            </thead>
+
+			<tbody> 
+			</tbody>
+
+		</table>
+
+	</body>
+
+<!--  SCRIPTS  ============================================================================================================================ -->	
+    <!-- js libs downloaded (in case web sources change) -->
+    <link href="csv_to_html src/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="csv_to_html src/javascript/main/jquery.dataTables.js"></script>
+    <script src="csv_to_html src/javascript/main/jquery-1.12.4.js"></script>
+    <script src="csv_to_html src/javascript/main/jquery.dataTables.min.js"></script>
+
+    <link href="csv_to_html src/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="csv_to_html src/javascript/aux/buttons.flash.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/buttons.html5.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/buttons.print.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/dataTables.buttons.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/jszip.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/pdfmake.min.js"></script>
+    <script src="csv_to_html src/javascript/aux/vfs_fonts.js"></script>
+    
+
+    <!-- js libs from web -->
+    <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    <link href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js"></script>
+
+
+	<meta charset=utf-8 />
+    <script type="text/javascript">
+
+
+
+// Function: Google search  ================================================================================================================
+	// $(function() {
+	//   $("a").on("click",function() {
+	//     query = 'hello world';
+	//     url ='http://www.google.com/search?q=' + this.textContent;
+	//     window.open(url,'_blank');
+	//     this.innerHTML='<a href="#"><div id="highlight">' + this.textContent + '</div></a> ';
+	//     //(this).addId("highlight")
+	//   });
+	// });
+
+    function googleSearch(e) {
+        text_ = e.textContent;
+        text_ = text_.replace('&','%26')  // & is a scpecial character in urls
+        url ='http://www.google.com/search?q=' + text_;
+        window.open(url,'_blank');
+    }
+
+// Function: other  ========================================================================================================================
+
+    // set TP type value to last col
+    function find( element ) {
+        var x = '_' + element.getAttribute("name");
+        var dd = document.getElementById(x);
+
+        row_position = element.closest("tr");  // index of row
+        col_position = element.closest("td");  // 
+        $('#table_1_id').dataTable().fnUpdate(element.value, row_position, (col_position.cellIndex+1));
+    }
+
+    // Performs warning alert when closing current page tab
+    window.onbeforeunload = function() {
+        return "You're leaving the site.";
+    };
+    $(document).ready(function() {
+        $('a[rel!=ext]').click(function() { window.onbeforeunload = null; });
+        $('form').submit(function() { window.onbeforeunload = null; });
+    });
+
+
+// Filter search functions for table  =======================================================================================================
+
+    // Function performs AND search on item descriptions
+    $("#search").keyup(function(){
+        _this = this;
+        
+        // Show only matching TR, hide rest of them
+        $.each($("#table_1_id tbody tr a"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                $(this).hide();
+                //$(this.style.display = "none"
+            else
+                $(this).show();                
+        });
+    }); 
+
+
+    function custom_dTable_search_inc_OR(e){
+        var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+        var counter = 0;
+        var highlighted_output = '';
+        input1 = document.getElementById("myInput_or_inc");
+        input2 = input1.value.toUpperCase();
+        input3 = input2.trim();
+        if(input3.length != 0){
+            search_tokens_ls = input3.split(/\s+/);
+        }
+        
+        var dataTable = $('#table_1_id').dataTable();
+        dataTable.fnFilter(search_tokens_ls.join('|'), 0, true, false);                      // 0 refers to search only in first column
+        //dataTable.fnFilter(search_tokens_ls.join('|'), null, true, false, true, true);     // detailed version for search in all columns
+    } 
+
+    function custom_dTable_search_exc_OR(e){
+        //$.fn.dataTableExt.afnFiltering.push(
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var firstCol = data[0];
+                var counter = 0;
+
+                var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+                var counter = 0;
+                var highlighted_output = '';
+                input1 = document.getElementById("myInput_or_exc");
+                input2 = input1.value.toUpperCase();
+                input3 = input2.trim();
+
+                // if search field has no search tokens, refresh table by showing all rows
+                if(input3.length == 0){
+                    $.fn.dataTableExt.afnFiltering.length = 0;
+                    $('#table_1_id').dataTable().fnDraw();
+                    return;
+                }
+                else {
+                    search_tokens_ls = input3.split(/\s+/);
+                }
+
+                // count token matches. counter equals to tokens count, then all tokens are found in row
+                var counter = 0;
+                for(var i = 0; i < search_tokens_ls.length; i++) {
+                    if(firstCol.toUpperCase().indexOf(search_tokens_ls[i]) > -1) {
+                        return false;
+                        //counter = counter + 1;
+                        //break;
+                    }
+                }
+                return true;
+
+            }
+        );
+
+        var dataTable = $('#table_1_id').dataTable();
+        //dataTable.draw();
+        dataTable.fnDraw();
+        $.fn.dataTable.ext.search.pop();
+
+    }
+
+    function custom_dTable_search_inc_AND(e){
+        var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+        var counter = 0;
+        var highlighted_output = '';
+        input1 = document.getElementById("myInput_and_inc");
+        input2 = input1.value.toUpperCase();
+        input3 = input2.trim();
+        if(input3.length != 0){
+            search_tokens_ls = input3.split(/\s+/);
+        }
+        
+        var dataTable = $('#table_1_id').dataTable();
+        dataTable.fnFilter(input3);        
+    }
+
+    function custom_dTable_search_exc_AND(e){
+        //$.fn.dataTableExt.afnFiltering.push(    // alternative version of 
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                var firstCol = data[0];
+                var counter = 0;
+
+                var input1, input2, input3, search_tokens_ls=[], filter_ls, ul, li, a, i;
+                var counter = 0;
+                var highlighted_output = '';
+                input1 = document.getElementById("myInput_and_exc");
+                input2 = input1.value.toUpperCase();
+                input3 = input2.trim();
+
+                // if search field has no search tokens, refresh table by showing all rows
+                if(input3.length == 0){
+                    $.fn.dataTableExt.afnFiltering.length = 0;
+                    $('#table_1_id').dataTable().fnDraw();
+                    return;
+                }
+                else {
+                    search_tokens_ls = input3.split(/\s+/);
+                }
+
+                // count token matches. counter equals to tokens count, then all tokens are found in row
+                var counter = 0;
+                for(var i = 0; i < search_tokens_ls.length; i++) {
+                    if(firstCol.toUpperCase().indexOf(search_tokens_ls[i]) > -1) {
+                        counter = counter + 1;
+                        //break;
+                    }
+                }
+                return (counter==search_tokens_ls.length) ? false : true;  // exclude AND
+                //return (counter==search_tokens_ls.length) ? true : false;    // include AND
+
+            }
+        );
+
+        var dataTable = $('#table_1_id').dataTable();
+        //dataTable.draw();
+        dataTable.fnDraw();
+        $.fn.dataTable.ext.search.pop();
+
+    }
+
+
+
+// DATA TABLE  ============================================================================================================================
+// datatable setting for data above
+    $(document).ready(function() {
+        $('#table_1_id').DataTable( {
+            data: dataSet,
+            'paging': true,        // makes data paginated
+            'sort': true,          // makes column sortable on header click
+            'order': [],          // enable/disable intial sorting
+            'searching': true,    // enable/disable search box
+
+
+            // sets separate properties for individual columns
+            // in "targets" indicated index of columns
+            "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": true,
+                "searchable": true
+            },
+            {
+                "targets": [ 1 ],
+                "visible": true,
+                "searchable": false
+            },
+            {
+                "targets": [ 2 ],
+                "visible": true,
+                "searchable": false
+            }
+            ],
+            dom: 'Bflrtip',
+            buttons: [
+                //'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                    text: 'Export to CSV',        // sets button name
+                    extend: 'csv',                // adds button that exports datatable into csv
+                    exportOptions: {
+                        columns: [':not(.exp)']   // selects all column but with class name .exp for render
+                        // ,format: {
+                        //     body: function(data, col, row) {
+                        //         var table = $('#table_1_id').DataTable();
+                        //         if (col == 'NewCol2 hid') {
+                        //             return table
+                        //                     .cell( {row: row, column: col} )
+                        //                     .nodes()
+                        //                     .to$()
+                        //                     .find(':selected')
+                        //                     .text()
+                        //         } else {
+                        //             return data;
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+            ]
+        } );
+    } );
+
+// TESTS:
+//$('#table_1_id tr:eq(0) th:eq(0)').text("Text update by code");
+// $(document).ready(function(){
+
+//     $("#table_1_id").on('click', '.btnSelectt', function() {
+//          $('#table_1_id').dataTable().fnUpdate('Zebra' , $(this).closest("tr"), 0 );
+//     });
+// });
+
+
+// DATA  ==================================================================================================================================
+    var dataSet = [
+
+                
+
+
+
+
+['<a href="#" onclick="googleSearch(this);" > fancy feast wet cat food, gravy lovers, poultry & beef variety pack, 3-ounce can, pack of 24 </a>','<div><div class="rb"><input type="radio" name="radio_1" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_1" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_1"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > wyler\'s soft drink mix - iced - 1.33 oz </a>','<div><div class="rb"><input type="radio" name="radio_2" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_2" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_2"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > dove body wash, cool moisture 22 oz, pack of 4 </a>','<div><div class="rb"><input type="radio" name="radio_3" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_3" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_3"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > royal canin veterinary diet hypoallergenic hydrolyzed protein hp dry dog food, 25.3-lb bag </a>','<div><div class="rb"><input type="radio" name="radio_4" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_4" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_4"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > de cecco extra-virgin classico olive oil - (33.8oz) </a>','<div><div class="rb"><input type="radio" name="radio_5" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_5" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_5"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > barilla angel hair - (16oz) </a>','<div><div class="rb"><input type="radio" name="radio_6" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_6" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_6"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > swiffer wetjet spray mop floor cleaner multi-purpose solution, febreze lavender & vanilla comfort scent, 42.2-ounce (pack of 6) (packaging may vary) </a>','<div><div class="rb"><input type="radio" name="radio_7" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_7" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_7"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > whiskas temptations - tumblers - 2.47 oz </a>','<div><div class="rb"><input type="radio" name="radio_8" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_8" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_8"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > pampers cruisers diapers economy plus pack, size 3, 174 count </a>','<div><div class="rb"><input type="radio" name="radio_9" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_9" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_9"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > versace bright crystal deluxe sample / bright crystal deluxe sample </a>','<div><div class="rb"><input type="radio" name="radio_10" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_10" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_10"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > carrington farms carrington farms organic extra virgin cold pressed coconu... </a>','<div><div class="rb"><input type="radio" name="radio_11" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_11" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_11"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > ouidad climate control defrizzing shampoo, 8.5 ounce </a>','<div><div class="rb"><input type="radio" name="radio_12" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_12" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_12"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > enfamil a.r. infant formula for spit up powder refill box, for babies 0-12 months, 32.2-ounce </a>','<div><div class="rb"><input type="radio" name="radio_13" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_13" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_13"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > versace eros versace eros eau de toilette spray - 0.03 oz / sample </a>','<div><div class="rb"><input type="radio" name="radio_14" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_14" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_14"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > chi infra thermal protective treatment, 32 fluid ounce (950 ml) by chi </a>','<div><div class="rb"><input type="radio" name="radio_15" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_15" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_15"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > natural balance platefulls salmon, tuna, and crab formula in gravy cat food with 3-ounce pouches, 24-pack </a>','<div><div class="rb"><input type="radio" name="radio_16" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_16" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_16"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > greenies dental chews teenie treats for dogs - mini treat-pak package 6 oz. 22 count </a>','<div><div class="rb"><input type="radio" name="radio_17" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_17" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_17"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > bumble and bumble hairdresser\'s invisible oil / samples </a>','<div><div class="rb"><input type="radio" name="radio_18" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_18" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_18"> TruePos </div>'],
+['<a href="#" onclick="googleSearch(this);" > alba botanica very emollient, french lavender bath & shower gel, 32 ounce </a>','<div><div class="rb"><input type="radio" name="radio_19" value="TruePos"  onclick="find(this);" checked > TruePos  </input></div><div class="rb"><input type="radio" name="radio_19" value="FalsePos" onclick="find(this);"         > FalsePos </input></div></div>','<div id="_radio_19"> TruePos </div>'],
+
+	                ];
+
+	    </script>
+	</html>
+	
