@@ -1,5 +1,7 @@
 # csv-to-datatable-converter
 
+csv-to-datatable-converter/example/my_html_image.png
+
 #### Problem statement:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 At my work when I do NLP-ML tasks where I need to build a model for multi-class text classification, my training set is usually in csv format with two main columns, where I have product descriptions (text) and their product categories (target classes) respectively, and most of the times the product categories are not accurate enough where some product categories have a lot of irrelevant product descriptions.  
