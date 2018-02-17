@@ -43,7 +43,7 @@ python csv_to_html.py -f test_csvs/10000.csv -o my_html
 ```
 you will get the following in terminal:
 
-> ====================================================================================================
+====================================================================================================
 FILE DESCRIPTION:
   csv file path:     test_csvs/10000.csv
   csv file:          10000.csv
