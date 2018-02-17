@@ -60,7 +60,26 @@ FILE DESCRIPTION:
 	 5    month_                         Integer
 	 6    source_                        Text
 	 7    by_means                       Text
+
+====================================================================================================
+INDICATE COLUMNS TO BE INCLUDED:
+
+  Enter column order numbers seperated by comma:  1,5
 ```
+and for demonstration purposes I provided **1** and **5** column indexes meaning that only 1st column *(e.g. description)* and 5th column *(e.g. month_)* needs to be included in html file.
+
+And then **my_html.html** file is generated with the following summary messages:
+```
+  Following columns selected:
+   ['description', 'month_']
+
+Processing data from CSV file ...
+	The output html file will be called as [my_html.html]
+
+Processed 9999 rows
+Processing took 0.146656 s
+```
+
 
 #### Features:  
 * #1  
