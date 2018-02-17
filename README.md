@@ -1,7 +1,5 @@
 # csv-to-datatable-converter
 
-![alt text](https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png)  
-
 #### Problem statement:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 At my work when I do NLP-ML tasks where I need to build a model for multi-class text classification, my training set is usually in csv format with two main columns, where I have product descriptions (text) and their product categories (target classes) respectively, and most of the times the product categories are not accurate enough where some product categories have a lot of irrelevant product descriptions.  
@@ -70,7 +68,7 @@ INDICATE COLUMNS TO BE INCLUDED:
 ```
 and for demonstration purposes I provided **1** and **5** column indexes meaning that only 1st column *(e.g. description)* and 5th column *(e.g. month_)* needs to be included in html file.
 
-And then **my_html.html** file is generated with the following summary messages:
+And then you will see the following final summary messages after which **my_html.html** file will be generated inside main **csv-to-datatable-converter** folder:
 ```
   Following columns selected:
    ['description', 'month_']
@@ -81,6 +79,9 @@ Processing data from CSV file ...
 Processed 9999 rows
 Processing took 0.146656 s
 ```
+
+As a reference you can find **my_html.html** file is in the example folder. And this is how the **my_html.html** file looks like if you open it in browser:  
+![alt text](https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png)  
 
 
 #### Features:  
