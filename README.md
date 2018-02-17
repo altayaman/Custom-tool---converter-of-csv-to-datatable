@@ -80,7 +80,7 @@ Processed 9999 rows
 Processing took 0.146656 s
 ```
 
-<br><br><br>
+<br><br>
 
 As a reference you can find **my_html.html** file is in the example folder. And this is how the **my_html.html** file looks like if you open it in browser:  
 ![alt text](https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png)  
