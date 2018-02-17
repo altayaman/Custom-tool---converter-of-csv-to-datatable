@@ -30,7 +30,7 @@ where original column names and thir types are shown in 'column names' and 'colu
 
 
 
-####Features:  
+#### Features:  
 * #1  
 As the default search filter of datatables are doing only default including-AND search, 4 types of search filters are implemented:  
 1 - including-AND search  (searches/shows any string value that contains all search values)  
@@ -40,25 +40,34 @@ As the default search filter of datatables are doing only default including-AND 
 
 * #2  
 Table cell values are google-searchable on click on value itself.  
+
 * #3  
 Datatable has 'TF Type' column that provides radio buttons for each row where one of two values (True, False) can be selected.  
 And 'TF Typeid' column values change according to checked/selected value in 'TF Type' column.  
+
 * #4  
 Datatable config was set up so that it does not sort your data when it opens. But data entries can be sorted by clicking on column name.  
+
 * #5  
 When you close the table or refresh the page, it will give pop-up warning window so that you do not close/refresh your page.  
+
 * #6  
 The whole datatable can be downloaded as csv file where 'TF Type' column is not included purposely as a part of feature.  
+
 * #7  
 There is toogle buttons which can hide/unhide corresponding column on click. Every toogle button has corresponding column name it hides/unhides.  
+
 * #8  
 Table cells can be navigated using keyboard arrow keys once clicked on any of them.  
+
 * #9  
 On space-button click the table cell value is google-searched in own new separate window (not tab).  
+
 * #10  
 On E button click the table cell value is google-searched in own new separate window (not tab), but google-search results are extracted in a plain text links format.  
 Note: For the E-key functionality to work, it is needed to install CORS plugin in Chrome that enables Cross-Origin Resource Sharing working.  
-#11  
+
+* #11  
 Set boolean argument to false in fnUpdate function in find() function so that every time on fnUpdate function trigger the datatable does not switch to first page.  
 For example when we change radio button values in Tf Type column.  
 
