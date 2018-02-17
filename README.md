@@ -19,15 +19,46 @@ Run in terminal:
 python csv_to_html.py -f <file path> -o <out file>  
 ```
 \<file path\> - csv file path you need to convert into html.  
-\<out file\> - name for out html file that will be generated.  
-  
+\<out file\> - name for out html file that will be generated. If out file name is not passed, default name will be given which is **filled_template**.    
 
 * b)  
 After script is launched, it will start analyzing csv file to get column names and column data types.  
 Once analysis is complete, brief columns summary can/will be printed.  
 where original column names and their types are shown in 'column names' and 'column types' respectively.  
 
+* c)  
+User will be prompted to indicate columns that needs to be included in html file.
+And again columns indexes need to be indicated seperated by commas.
+or if all columns needs to be included, user can just press ENTER key.  
 
+* d)  
+And finally you will get your html file.  
+
+
+#### Example usage:  
+
+Let's take 10000.csv file in test_csvs folder and generate html file from it. If you run the following in terminal:
+```
+python csv_to_html.py -f test_csvs/10000.csv -o my_html  
+```
+you will get the following in terminal:
+
+> ====================================================================================================
+FILE DESCRIPTION:
+  csv file path:     test_csvs/10000.csv
+  csv file:          10000.csv
+
+  Analyzing file ...
+    Rows count:      9999
+
+    Column names and types:
+	 1    description                    Text
+	 2    description_norm_alphanum      Text
+	 3    description_norm_alpha         Text
+	 4    anno_type                      Text
+	 5    month_                         Integer
+	 6    source_                        Text
+	 7    by_means                       Text
 
 
 #### Features:  
