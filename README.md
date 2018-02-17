@@ -30,13 +30,14 @@ where original column names and thir types are shown in 'column names' and 'colu
 
 
 
-Features:  
+####Features:  
 * #1  
 As the default search filter of datatables are doing only default including-AND search, 4 types of search filters are implemented:  
 1 - including-AND search  (searches/shows any string value that contains all search values)  
 2 - excluding-AND search  (hides any string value that contains all search values)  
 3 - including-OR search   (searches/shows any string value that contains at least one of search values)  
 4 - excluding-OR search   (hides any string value that contains at least one of search values)  
+
 * #2  
 Table cell values are google-searchable on click on value itself.  
 * #3  
@@ -60,7 +61,8 @@ Note: For the E-key functionality to work, it is needed to install CORS plugin i
 #11  
 Set boolean argument to false in fnUpdate function in find() function so that every time on fnUpdate function trigger the datatable does not switch to first page.  
 For example when we change radio button values in Tf Type column.  
-Note:  
+
+**Note:**  
 The best side of the datatables is that it can take large amount of rows and it will not overwhelm your browser while working,  
 as datatbles paginate your data and consequently will render/show  your data only certain rows count chunk at each page.  
 By default it paginates the data by showing 10 rows per page which can be changed to 25, 50, 100.  
