@@ -1,6 +1,6 @@
 # csv-to-datatable-converter
 
-https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png  
+![alt text]https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png  
 
 #### Problem statement:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
