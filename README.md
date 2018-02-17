@@ -16,16 +16,16 @@ So, before training a model, I needed to look through each category descriptions
 * a)  
 Run in terminal:  
 ```
-python csv_to_redshift_v4.1.py -f <file path> -t <table name> -s <schema name>  
+python csv_to_html.py -f <file path> -o <out file>  
 ```
-\<file path\> - csv file path you need to insert into db.  
-\<table name\> - table name that needs to be created to persist csv file data. if not passed, csv file name will be taken as table name.  
-\<schema name\> - schema name where table need to be created. if not passed, default will be taken as schema name. default schema name needs to be set in 'DB credentials' section below.  
+\<file path\> - csv file path you need to convert into html.  
+\<out file\> - name for out html file that will be generated.  
+  
 
 * b)  
 After script is launched, it will start analyzing csv file to get column names and column data types.  
-Once analysis is complete, brief columns summary can/will be printed,  
-where original column names and thir types are shown in 'column names' and 'column types' respectively.  
+Once analysis is complete, brief columns summary can/will be printed.  
+where original column names and their types are shown in 'column names' and 'column types' respectively.  
 
 
 
