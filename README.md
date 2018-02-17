@@ -84,7 +84,7 @@ As a reference you can find **my_html.html** file is in the example folder. And 
 ![alt text](https://github.com/altayaman/csv-to-datatable-converter/blob/master/example/my_html_image.png)  
 
 
-#### Features:  
+#### All features of generated html file:  
 * #1  
 As the default search filter of datatables are doing only default including-AND search, 4 types of search filters are implemented:  
 1 - including-AND search  (searches/shows any string value that contains all search values)  
