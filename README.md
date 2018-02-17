@@ -10,7 +10,8 @@ ne of the product categories is *Shampoos* category where it should have only sh
 So, before training a model, I needed to look through each category descriptions quickly by google searching some portion of them and annotate irrelevant ones as False and download it back into new csv file with annotation. And I did this portable *csv-to-datatable-converter* that gives me desired functionalitiy features to do my trainset checkup.  
 
 #### What project does:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The python script converts columns from csv file into separate html file as table. The main thing the converted html file offers is that you can quickly search and find needed product descriptions by using search fields, annotate each text (e.g. product descriptions) as True/False in separate table column, google search the product descriptions and download as csv file using quick shorcuts.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The python script generates a separate html file with selected columns from csv file. The main thing the converted html file offers is that you can quickly search and find needed product descriptions by using search fields, annotate each text (e.g. product descriptions) as True/False in separate table column, google search the product descriptions and download as csv file using quick shorcuts. All detailed features of the generated html file can be found at the bottom.  
 
 #### Usage:  
 * a)  
